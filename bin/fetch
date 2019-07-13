@@ -1,5 +1,7 @@
-#!/bin/bash -ex
+#!/bin/bash -eu
+
 source "$(dirname 0)/conf"
+exec 2> "$logdir/$(basename $0).$(date +%Y%m%d_%H%M%S).$$"
 gitpwd=$(openssl rsautl -decrypt -inkey /home/radipi/passxem/seckey-wd -in /home/radipi/passxem/cipher-wd)
 
 [ -n "${CONTENT_LENGTH}" ] && dd bs=${CONTENT_LENGTH} > /dev/null

@@ -5,6 +5,9 @@ gitpwd=$(openssl rsautl -decrypt -inkey /home/radipi/passxem/seckey -in /home/ra
 
 [ "$USER" = "root" ]
 
+mkdir -p "$logdir"
+chown www-data:www-data "$logdir"
+
 ### INSTALL THIS SYSTEM ###
 rsync -av --delete "$(dirname $0)/bin/" "$appdir/"
 chown www-data:www-data "$appdir" -R
