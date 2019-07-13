@@ -10,4 +10,6 @@ md="$contentsdir/$dir/main.md"
 [ -f "$md" ]
 
 ### MAKE HTML ###
-pandoc --template="$viewdir/template.html" -f markdown_github+yaml_metadata_block "$md"
+pandoc --template="$viewdir/template.html" -f markdown_github+yaml_metadata_block "$md" |
+sed -r "/:\/\/|=\"\//!s;<(img src|a href)=\";&/$dir/;"	|
+sed "s;/$dir/#;#;g"
