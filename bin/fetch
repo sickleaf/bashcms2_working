@@ -10,3 +10,17 @@ echo -e 'Content-type: text/html\n\n'
 
 cd "$contentsdir"
 git pull "https://$contents_owner:$gitpwd@github.com/$contents_owner/$contents"
+
+### CREATE TIMESTAMP FILES IF NOT EXISTS ###
+find posts pages -maxdepth 1 -type d |
+grep / |
+while read d ; do
+	[ -f "$contentsdir/$d/main.md" ] &&
+	mkdir -p "$datadir/$d" &&
+	### ADD TIME FILES ###
+	git log -p "$contentsdir/$d/main.md" |
+	grep '^Date:' |
+	awk '{print $2,$3,$4,$5,$6}' |
+	date -f - "+%Y-%m-%d %H:%M:%S" |
+	awk -v cf="$datadir/$d/created_time" -v mf="$datadir/$d/modified_time" 'NR==1{print > mf}END{print > cf}'
+done
