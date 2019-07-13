@@ -1,0 +1,5 @@
+contents="bashcms2_sample"
+contents_owner="sickleaf"
+wwwdir="/var/www"
+contentsdir="$wwwdir/$contents"
+appdir="$wwwdir/bashcms2"

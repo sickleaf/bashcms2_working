@@ -1,0 +1,12 @@
+#!/bin/bash -eux
+
+source "$(dirname $0)/bin/conf"
+gitpwd=$(openssl rsautl -decrypt -inkey /home/radipi/passxem/seckey -in /home/radipi/passxem/cipher)
+
+[ "$USER" = "root" ]
+
+rm -rvf "${contentsdir:?}"
+cd "$wwwdir"
+
+git clone "https://$contents_owner:$gitpwd@github.com/$contents_owner/$contents"
+chown www-data:www-data "$contentsdir" -R
