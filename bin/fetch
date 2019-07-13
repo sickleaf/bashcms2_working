@@ -1,0 +1,10 @@
+#!/bin/bash -ex
+source "$(dirname 0)/conf"
+gitpwd=$(openssl rsautl -decrypt -inkey /home/radipi/passxem/seckey-wd -in /home/radipi/passxem/cipher-wd)
+
+[ -n "${CONTENT_LENGTH}" ] && dd bs=${CONTENT_LENGTH} > /dev/null
+
+echo -e 'Content-type: text/html\n\n'
+
+cd "$contentsdir"
+git pull "https://$contents_owner:$gitpwd@github.com/$contents_owner/$contents"
