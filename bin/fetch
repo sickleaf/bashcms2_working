@@ -69,7 +69,7 @@ awk '$3~/^posts/' > $tmp-post_list
 mv $tmp-post_list "$datadir/post_list"
 
 # LIST PAGES DATA
-awk '$3~/^pages/' $tmp-list > $tmp-pages_list
+awk '$3~/^pages/' $tmp-list > $tmp-page_list
 mv $tmp-page_list "$datadir/page_list"
 
 # MAKE PREV/NEXT NAVIGATION LINK
