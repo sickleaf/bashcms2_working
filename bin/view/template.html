@@ -5,27 +5,47 @@ Content-type: text/html
 <head>
 	<meta charset="utf-8" />
 	<title>$title$</title>
+	<link rel="stylesheet" href="/view/default.css" />
+	<meta name="viewport" content="width=device-width" />
 </head>
 <body>
-	<header>
-		<p>$created_time$</p>
-		<p>views: $views$</p>
-		<p>$nav$</p>
+	<header id="page-header">
+		<hgroup>
+			<h1><a href="/">leaflog</a></h1>
+			<h4>ラジオとその他</h4>
+		</hgroup>
+		<nav><ul>
+			<li><a href="/?page=top">サイトについて</a></li>
+			<li><a href="/?post">最新の記事</a></li>
+		</ul></nav>
 	</header>
-	$body$
-	<footer>
-	 <p>
-	 created: $created_time$
-	 </p>
-	 <p>
-	 modified: $modified_time$
-	 </p>
-	 <p>
-	 keywords: $Keywords$
-	 </p>
-	 <p>
-	 Copyright: $Copyright$
-	 </p>
-	</footer>
+
+	<article id="article">
+		<header id="article-header">
+			<nav>
+			$nav$ <br />
+			created: $created_time$ views: $views$
+			</nav>
+		</header>
+
+		<article id="article-body">
+			$body$
+		</article>
+
+		<footer id="article-footer">
+			<nav>
+			created: $created_time$ (modified: $modified_time$)<br />
+			views: $views$  keywords: $Keywords$
+			</nav>
+		</footer>
+	</article>
+
+	<aside id="widgets">
+		<aside>functions</aside>
+		
+		<footer id="page-footer">
+			<p>Copyright: $Copyright$</p>
+		</footer>
+	</aside>
 </body>
 </html>
