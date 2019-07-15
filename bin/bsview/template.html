@@ -47,6 +47,11 @@ Content-type: text/html
 
   <div class="collapse navbar-collapse" id="navbarsExampleDefault">
     <ul class="navbar-nav mr-auto">
+	$for(links)$
+      <li class="nav-item active">
+        <a class="nav-link" href="$links.href$">$links.text$</a>
+      </li>
+      $endfor$
       <li class="nav-item active">
         <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
       </li>
