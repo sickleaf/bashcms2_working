@@ -38,6 +38,8 @@ Content-type: text/html
     <!-- Custom styles for this template -->
     <!-- <link href="jumbotron.css" rel="stylesheet"> -->
     <link href="/bsview/jumbotron.css" rel="stylesheet">
+    <link rel="stylesheet"
+          href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.8/styles/default.min.css">
   </head>
   <body>
     <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
@@ -77,8 +79,8 @@ Content-type: text/html
   <!-- Main jumbotron for a primary marketing message or call to action -->
   <div class="jumbotron">
     <div class="container">
-      <h1 class="display-3">leaflog</h1>
-      <p>radio, etc</p>
+      <h1 class="display-5">leaflog</h1>
+      <p>ラジオとその他</p>
     </div>
   </div>
 
@@ -87,14 +89,14 @@ Content-type: text/html
 
     <div class="row">
 	    <div class="col-md-8" id="article-body">
+		    <div class="card" id="article-info">
+			    tag: <span id="keywords">$Keywords$</span> count：$views$</br>
+			    <p style="padding:5px">$created_time$ (mod: $modified_time$)
+			    </p>
+		    </div>
 		    $body$
 		    <div class="card" id="article-info">
-			    <h4 class="card-header">Article Info</h4>
-			    <p style="padding:5px">created: $created_time$<br />
-			    modified: $modified_time$<br />
-			    keywords: <span id="keywords">$Keywords$</span></br>
 			    $nav$
-			    </p>
 		    </div>
 	    </div>
 	    <div class="col-md-4" id="widgets">
@@ -121,11 +123,12 @@ Content-type: text/html
 </main>
 
 <footer class="container">
-  <p>&copy; Company 2017-2019</p>
 </footer>
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js" integrity="sha384-xrRywqdh3PHs8keKZN+8zzc5TX0GRTLCcmivcbNJWm2rs5C8PRhcEn3czEjhAO9o" crossorigin="anonymous"></script>
 <script src="/bsview/main.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.8/highlight.min.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
 <!-- <script>window.jQuery || document.write('<script src="/docs/4.3/assets/js/vendor/jquery-slim.min.js"><\/script>')</script><script src="/docs/4.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-xrRywqdh3PHs8keKZN+8zzc5TX0GRTLCcmivcbNJWm2rs5C8PRhcEn3czEjhAO9o" crossorigin="anonymous"></script> -->
   </body>
 </html>
