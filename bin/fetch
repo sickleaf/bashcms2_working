@@ -89,7 +89,7 @@ while read ymd hms d ; do
         sed -n -e '1p' -e '$p'                                          |
         xargs -I@ cat "$datadir/@/link"                                 |
         awk 'NR<=2{print}END{for(i=NR;i<2;i++){print "LOST TITLE"}}'    |
-        sed -e '1s/^/prev:/' -e '2s/^/next:/'                           |
+        sed -e '1s/^/前の記事:/' -e '2s/^/次の記事:/'                           |
         tr '\n' ' '                                     > "$datadir/$d/nav"
 done
 
