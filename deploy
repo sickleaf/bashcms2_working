@@ -1,7 +1,7 @@
 #!/bin/bash -eux
 
 source "$(dirname $0)/bin/conf"
-gitpwd=$(openssl rsautl -decrypt -inkey /home/radipi/passxem/seckey -in /home/radipi/passxem/cipher)
+#gitpwd=$(openssl rsautl -decrypt -inkey /home/radipi/passxem/seckey -in /home/radipi/passxem/cipher)
 
 [ "$USER" = "root" ]
 
@@ -24,7 +24,8 @@ mv "fetch" "fetch_$rnd.cgi"
 rm -rvf "${contentsdir:?}"
 cd "$wwwdir"
 
-git clone "https://$contents_owner:$gitpwd@github.com/$contents_owner/$contents"
+#git clone "https://$contents_owner:$gitpwd@github.com/$contents_owner/$contents"
+git clone "git@github.com:$contents_owner/$contents.git"
 chown www-data:www-data "$contentsdir" -R
 
 echo "call fetch_$rnd.cgi from GitHub"
