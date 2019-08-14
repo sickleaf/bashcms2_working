@@ -7,3 +7,6 @@ body {
 #widgets h1{font-size:160%}
 #widgets a{font-size:80%}
 
+table,th,tr,td {border-style:solid;}
+
+
