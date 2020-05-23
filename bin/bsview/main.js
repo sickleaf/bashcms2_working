@@ -3,6 +3,7 @@ window.onload = function () {
     rankArticles(10);
     linkKeywords();
     tagcloud();
+    invisibleCard();
     //fullSearch("");
 }
 
@@ -76,6 +77,15 @@ function tagcloud(){
     var url = "/tagcloud.cgi" 
     httpReq.open("GET",url,true);
     httpReq.send(null);
+}
+
+function invisibleCard(){
+    var search = location.search;
+    var pname = location.pathname;
+    var keyword = new RegExp("^/key.cgi")
+    if ( search === "" || keyword.test(pname)) {
+        for (let el of document.querySelectorAll("div.card")) el.style.visibility = "hidden"
+    }
 }
 
 
