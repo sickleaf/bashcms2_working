@@ -13,7 +13,7 @@ rsync -av --delete "$(dirname $0)/bin/" "$appdir/"
 chown www-data:www-data "$appdir" -R
 echo "$appdir copied.";
 
-[ "$1" = "clean" ] || exit # if $1=clean, scripts below will be executed.
+[ $# -eq 1  ] &&  [ "$1" = "clean" ] || { echo "deploy stopped. (skip rename fetch, remove article repository) if you want to do it, set 'clean' to \$1."; exit ; }
 
 ### RENAME FETCH CGI ###
 cd "$appdir"
