@@ -88,7 +88,7 @@ else
 	
 		git push origin master
 	
-		bash ${appdir%/}/${fetchCGI}
+		bash ${appdir%/}/${callCGI}
 		echo "https://sickleaf.work/?post=${articleName}"
 	fi
 fi
