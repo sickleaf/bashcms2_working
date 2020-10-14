@@ -1,17 +1,25 @@
 #!/bin/bash -euvx
 source "$(dirname $0)/conf"
+source "$(dirname $0)/local/localconf"
 exec 2> "$logdir/$(basename $0).$(date +%Y%m%d_%H%M%S).$$"
 #[ -n "${CONTENT_LENGTH}" ] && dd bs=${CONTENT_LENGTH} > /dev/null
 tmp=/tmp/$$  #追加
 
 echo -e 'Content-type: text/html\n'
 
+functionScript=${myScript}/common/usefulFunction.sh
+filterScript=${myScript}/common/getSpreadSheet.sh
+
+### read function 
+. ${functionScript}
+. ${filterScript}
+
 cd "$contentsdir"
 # make /var/www/.ssh permission as www-data:www-data, and register public key into $contentsdir repository
 #git fetch origin master
-git diff --name-status HEAD origin/master  |
-grep -Eo '(posts|pages)/[^/]+'             |
-sort -u                                    > $tmp-git-change
+#git diff --name-status HEAD origin/master  |
+#grep -Eo '(posts|pages)/[^/]+'             |
+#sort -u                                    > $tmp-git-change
 
 #git pull
 #
@@ -20,6 +28,27 @@ sort -u                                    > $tmp-git-change
 #grep -Eo '(posts|pages)/[^/]+' > $tmp-git-change
 #
 #rm -f "$datadir/INIT"
+
+### repository status ###
+find "$contentsdir" -name "main.md"     |
+xargs -I@ bash -c "getLatestGitDate @"  |
+sort -r |
+sed "s;/var/www/bashcms2_sample/;;g; s;/main.md;;g " > /tmp/repo_status
+
+
+### get datafolder info ###
+find /var/www/bashcms2_sample_data/ -name "modified_time"       |
+sed -r "s/(.*)/cat \1,\1/g"     |
+teip -d, -f1 -- sh -    |
+sort -r |
+sed "s;/var/www/bashcms2_sample_data/;;g; s;/modified_time;;g" > /tmp/modify
+
+#diff /tmp/repo_status /tmp/modify | sed -n "/^</p" | cut -d, -f2
+
+diff /tmp/repo_status /tmp/modify |
+sed -n "/^</p" |
+cut -d, -f2 > $tmp-git-change
+
 
 ### CREATE/DELETE ARTICLE DIRECTORY ###
 cat $tmp-git-change |
