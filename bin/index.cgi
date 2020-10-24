@@ -24,6 +24,7 @@ modified_time: '$(cat "$datadir/$dir/modified_time")'
 title: '$(cat "$datadir/$dir/title")'
 nav: '$(cat "$datadir/$dir/nav")'
 views: '$(ls -l "$counter" | cut -d' ' -f 5)'
+ogpmd: '$(cat "$md" | grep -vE "[!$&'()*+,-./:;<=>?@\`\[\\^_{|}~]"  | sed "s;#* ;;g" | tr "\n" " " | iconv -f utf8 -t sjis | cut -c 1-160 | iconv -c -f sjis -t utf8)'
 $(cat "$contentsdir/config.yaml" )
 ---
 FIN
