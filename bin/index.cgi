@@ -5,6 +5,8 @@ set -o pipefail
 
 trap 'rm -f $tmp-*' EXIT
 
+source "$appdir/bashcmsFunc.cgi"
+
 ### VARIABLES ###
 tmp=/tmp/$$
 dir="$(tr -dc 'a-zA-Z0-9_=' <<< ${QUERY_STRING} | sed 's;=;s/;')"
@@ -15,6 +17,7 @@ md="$contentsdir/$dir/main.md"
 
 ### MAKE MATADATA ###
 counter="$datadir/counters/$(tr '/' '_' <<< $dir)"
+[ ! -f $counter ] && touch $counter
 echo -n 1 >> "$counter" # increment the counter
 
 cat << FIN > $tmp-meta.yaml
@@ -29,10 +32,36 @@ $(cat "$contentsdir/config.yaml" )
 ---
 FIN
 
-### OUTPUT ###
-pandoc --template="$viewdir/template.html"	\
-    -f markdown_github+yaml_metadata_block "$md" "$tmp-meta.yaml"  |
-sed -r "/:\/\/|=\"\//!s;<(img src|a href)=\";&/$dir/;" |
-sed "s;/$dir/#;#;g" |
-sed 's;href="<a href="\(.*\)"[^>]*>.*</a>";href="\1";'
+if [ "${dir}" = "pages/top" ]; then
 
+	### OUTPUT ###
+	start=1
+	end=${articleNum}
+
+	articleListNum=$(grep -c ^ "$datadir/post_list")
+
+	HTMLanchor="$(pageAnchorHTML ${articleListNum} 1 ${articleNum})"
+
+	tac "$datadir/post_list"	|
+	sed -n "${start},${end}p"	|
+	awk '{print $3}'		|
+	xargs -I@ cat "$datadir/@/link_date" "$contentsdir/@/main.md" |
+	grep -A20 'href="/?post' |
+	grep -E ^[ぁ-んァ-ン亜-熙　-】a-zA-Z0-9\<]  |
+	grep -Ev "^(Keywords: |Copyright:|<blo|<hr)" |
+	uniq |
+	sed  -e "/^<a href/i  \ \n---\n" -e "/\<a href/s/^/###### /g" -e "s;;;g" |
+	pandoc --template="$viewdir/template.html" -f markdown_github |
+	sed "s;<\!--PAGER-->;<center>${HTMLanchor}</br>;g"
+
+else
+
+	### OUTPUT ###
+	pandoc --template="$viewdir/template.html"	\
+	    -f markdown_github+yaml_metadata_block "$md" "$tmp-meta.yaml"  |
+	sed -r "/:\/\/|=\"\//!s;<(img src|a href)=\";&/$dir/;" |
+	sed "s;/$dir/#;#;g" |
+#	sed "s;<br />$;;g" |
+	sed 's;href="<a href="\(.*\)"[^>]*>.*</a>";href="\1";'
+
+fi
