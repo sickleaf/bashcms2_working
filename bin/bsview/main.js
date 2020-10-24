@@ -1,6 +1,6 @@
 window.onload = function () {
     lastArticles(5);
-    rankArticles(10);
+    rankArticles();
     linkKeywords();
     tagcloud();
     invisibleCard();
@@ -53,7 +53,7 @@ function fullSearch(){
     document.body.style.cursor = "wait";
 }
 
-function rankArticles(num){
+function rankArticles(){
     var httpReq = new XMLHttpRequest();
     httpReq.onreadystatechange = function(){
         if(httpReq.readyState != 4 || httpReq.status != 200)
@@ -61,7 +61,7 @@ function rankArticles(num){
 
         document.getElementById("rank-articles").innerHTML = httpReq.responseText;
    }
-    var url = "/rank_articles.cgi?num=" + num;
+    var url = "/rank_articles.cgi";
     httpReq.open("GET",url,true);
     httpReq.send(null);
 }
