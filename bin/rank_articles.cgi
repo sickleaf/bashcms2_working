@@ -10,8 +10,15 @@ awk '{print $5,$NF}'        |
 awk 'NF>=2'                 |
 sed 's;_;/;'                |
 sort -s -k1,1nr             |
-head -n "$num"              |
-while read pv d ; do
-    sed "s;</a>;($pv views)&<br />;" "$datadir/$d/link"
+head -n "$((articleNum+1))"		|
+awk '$0=$2'		|
+sed 1d 			|
+nl			|
+while read rankNo d ; do
+	if [ $rankNo -le 10 ]; then
+		sed "s;</a>;&<br />;" "$datadir/$d/link" | sed "s;<a;<strong>${rankNo}</strong> &;g"
+	else
+		sed "s;</a>;&<br />;" "$datadir/$d/link" | sed "s;<a;${rankNo} &;g"
+	fi;
 done |
 sed '1iContent-Type: text/html\n\n<h2>PV Ranking</h2>'
