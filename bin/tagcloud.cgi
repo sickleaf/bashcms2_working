@@ -5,7 +5,8 @@ exec 2> "$logdir/$(basename $0).$(date +%Y%m%d_%H%M%S).$$"
 tac "$datadir/keyword_list"                                                         |
 grep -oE ",.+,"                                                                     |
 cut -d"," -f2-                                                                      |
-sed -e "s/,$//g" -e "s/,/\n/g"					                    |
+sed -e "s/,$//g" -e "s;,,;;g" -e "s/,/\n/g"                                         |
+grep -v ^$                                                                          |
 sort                                                                                |
 uniq -c                                                                             |
 sort -k2,2                                                                          |
