@@ -1,9 +1,12 @@
+document.addEventListener("DOMContentLoaded", function(){
+    invisibleCard();
+});
+
 window.onload = function () {
     lastArticles(5);
     rankArticles();
     linkKeywords();
     tagcloud();
-    invisibleCard();
     //fullSearch("");
 }
 
@@ -82,8 +85,9 @@ function tagcloud(){
 function invisibleCard(){
     var search = location.search;
     var pname = location.pathname;
-    var keyword = new RegExp("^/key.cgi")
-    if ( search === "" || keyword.test(pname)) {
+    var key1 = new RegExp("^/key.cgi")
+    var key2 = new RegExp("^/viewTop.cgi")
+    if ( search === "" || key1.test(pname) || key2.test(pname) ) {
         for (let el of document.querySelectorAll("div.card")) el.style.visibility = "hidden"
     }
 }
