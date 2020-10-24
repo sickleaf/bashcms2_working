@@ -6,4 +6,5 @@ appdir="$wwwdir/system_bashcms2"
 viewdir="$appdir/bsview"
 logdir="/var/log/$contents"
 datadir="${contentsdir}_data"
+articleNum=10
 export LANG=ja_JP.UTF-8
