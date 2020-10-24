@@ -8,10 +8,10 @@ function pageAnchorHTML() {
 	articleNum=$3
 	
 	
-	topParts="＜＜"
-	nextParts="＜"
-	prevParts="＞"
-	lastParts="＞＞"
+	topParts="＜＜　　"
+	nextParts="＜　　"
+	prevParts="　　＞"
+	lastParts="　　＞＞"
 	
 	topLink=""
 	nextLink=""
