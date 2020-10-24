@@ -21,7 +21,7 @@ function pageAnchorHTML() {
 	htmlParts=""
 	
 	# articleListNum is less equal pageNum ; only one page AND  no link for anchor
-	[ ${articleListNum} -le ${pageNum} ] && { echo " <  1  >"; return 0; }
+	[ ${articleListNum} -le ${pageNum} ] && { echo " <  1 / 1  >"; return 0; }
 	
 	
 	## <<after this line, at least two pages needed. (at least one link will be set) >>
@@ -77,7 +77,7 @@ function pageAnchorHTML() {
 	
 	[ -n "${lastLink}" ] && lastParts="<a href=\"viewTop.cgi?num=${lastLink}\" >${lastParts}</a>"
 	
-	htmlParts="${topParts}\t${nextParts}\t${pageNum}\t${prevParts}\t${lastParts}"
+	htmlParts="${topParts}\t${nextParts}\t${pageNum} / ${endPage}\t${prevParts}\t${lastParts}"
 
 	echo "${htmlParts}"
 
