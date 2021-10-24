@@ -94,10 +94,16 @@ Content-type: text/html
 
     <div class="row">
 	    <div class="col-md-9" id="article-body">
+		    $if(articleTitle)$
+		    <h1>$articleTitle$</h1>
+		    $endif$
 		    <div class="card" id="article-info">
-			    <p style="padding:5px">$created_time$ (mod: $modified_time$) <br />
-			    tag: <span id="keywords">$Keywords$</span> count：$views$
+			    <p style="padding:5px"><strong>$created_time$</strong> (mod: $modified_time$)   [count：$views$] <br />
+			    tag: <span id="keywords">$Keywords$</span>
 			    </p>
+		    </div>
+		    <div class="" id="article-toc">
+			    $toc$
 		    </div>
 		    $body$
 		    <div class="card" id="article-info">
