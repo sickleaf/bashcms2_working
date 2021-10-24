@@ -48,16 +48,16 @@ if [ "${dir}" = "pages/top" ]; then
 	xargs -I@ cat "$datadir/@/link_date" "$contentsdir/@/main.md" |
 	grep -A20 'href="/?post' |
 	grep -E ^[ぁ-んァ-ン亜-熙　-】a-zA-Z0-9\<]  |
-	grep -Ev "^(Keywords: |Copyright:|<blo|<hr)" |
+	grep -Ev "^(Keywords: |articleTitle:|Copyright:|<blo|<hr)" |
 	uniq |
 	sed  -e "/^<a href/i  \ \n---\n" -e "/\<a href/s/^/###### /g" -e "s;;;g" |
-	pandoc --template="$viewdir/template.html" -f markdown_github |
+	pandoc --toc --toc-depth=3 --template="$viewdir/template.html" -f markdown_github |
 	sed "s;<\!--PAGER-->;<center>${HTMLanchor}</br>;g"
 
 else
 
 	### OUTPUT ###
-	pandoc --template="$viewdir/template.html"	\
+	pandoc --toc --toc-depth=3 --template="$viewdir/template.html"	\
 	    -f markdown_github+yaml_metadata_block "$md" "$tmp-meta.yaml"  |
 	sed -r "/:\/\/|=\"\//!s;<(img src|a href)=\";&/$dir/;" |
 	sed "s;/$dir/#;#;g" |
