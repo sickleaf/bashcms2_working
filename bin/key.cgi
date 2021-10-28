@@ -16,8 +16,8 @@ tac "$datadir/keyword_list"     |
 grep -F ",$word,"               |
 awk '{print $1}'                |
 xargs -I@ cat "$datadir/@/link_date" "$contentsdir/@/main.md" |
-grep -A15 'href="/?post' |
+grep -A15 '^<a href="/?post' |
 grep -E ^[ぁ-んァ-ン亜-熙　-】a-zA-Z0-9\<]  | 
-grep -Ev "^(Keywords: |Copyright:|<blo)" | 
+grep -Ev "^(Keywords: |articleTitle: |Copyright:|<blo)" |
 sed -e "/\<a href/a \  " -e "/\<a href/i  \ \n---\n" -e "/\<a href/s/^/###### /g" -e "1i# Keyword: \"$word\"" |
 pandoc --template="$viewdir/template.html"
