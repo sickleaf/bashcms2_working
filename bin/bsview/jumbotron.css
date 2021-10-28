@@ -14,6 +14,7 @@ table,th,tr,td {border-style:solid;}
 	width: 100%;
 	aspect-ratio: 16/9;
 	word-wrap: break-word;
+	line-height: 2;
 }
 
 a{
@@ -35,6 +36,25 @@ pre {
 	white-space: -o-pre-wrap;
 	word-wrap: break-word;
 }
+
+
+.col-md-9 > blockquote {
+	display: block;
+	margin-block-start: 1em;
+	margin-block-end: 1em;
+	margin-inline-start: 40px;
+	margin-inline-end: 40px;
+	margin: 1rem 0;
+	padding: 0.2rem 1rem;
+	border-left: 0.5rem solid #69f;
+	line-height: 1.5rem;
+	background: #f0f0f0;
+}
+
+blockquote > p{
+	margin: 0.5em;
+}
+
 
 /* quote,code block */
 code,pre > .hljs{
@@ -90,10 +110,16 @@ border-bottom-color: #ffd9d9;
 
 /* h5 :bottom */
 .col-md-9 > h5 {
-	padding: .5em;
+	padding: 0.5em 0 0.5em 0;
 	border-bottom: double 5px #ff5a5f;
 }
 
+/* h5 :bottom */
+.col-md-9 > h6 {
+	font-size: 1.17em;
+	font-weight: bold;
+	padding: 0.5em 0 0.5em 0;
+}
 .card {
 	border: 0px;
 }
