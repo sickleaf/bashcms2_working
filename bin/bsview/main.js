@@ -5,8 +5,9 @@ document.addEventListener("DOMContentLoaded", function(){
 window.onload = function () {
     lastArticles(5);
     rankArticles();
-    linkKeywords();
     tagcloud();
+    monthlyArchive();
+    linkKeywords();
     //fullSearch("");
 }
 
@@ -90,6 +91,19 @@ function invisibleCard(){
     if ( search === "" || key1.test(pname) || key2.test(pname) ) {
         for (let el of document.querySelectorAll("div.card")) el.style.visibility = "hidden"
     }
+}
+
+function monthlyArchive(){
+    var httpReq = new XMLHttpRequest();
+    httpReq.onreadystatechange = function(){
+        if(httpReq.readyState != 4 || httpReq.status != 200)
+            return;
+
+        document.getElementById("monthly-archive").innerHTML = httpReq.responseText;
+    }
+    var url = "/monthlyArchive.cgi"
+    httpReq.open("GET",url,true);
+    httpReq.send(null);
 }
 
 
