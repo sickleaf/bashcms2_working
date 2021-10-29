@@ -42,3 +42,5 @@ sed -e "/\<a href/a \  " -e "/\<a href/i  \ \n---\n" -e "/\<a href/s/^/###### /g
 pandoc --template="$viewdir/template.html" -f markdown_github |
 sed "s;<br />$;;g" |
 sed "s;<\!--PAGER-->;<center>${HTMLanchor}</br>;g"
+
+rm $tmp-viewlist
