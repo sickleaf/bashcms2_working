@@ -7,7 +7,7 @@ tmp=/tmp/$$
 echo -e 'Content-type: text/html\n'
 
 cd "$contentsdir"
-# make /var/www/.ssh permission as www-data:www-data, and register public key into $contentsdir repository
+
 git fetch origin master
 git diff --name-status HEAD origin/master  |
 grep -Eo '(posts|pages)/[^/]+'             |
@@ -20,6 +20,14 @@ find posts pages -type d       |
 grep -Eo '(posts|pages)/[^/]+' > $tmp-git-change
 
 rm -f "$datadir/INIT"
+
+if [ $(grep -c . $tmp-git-change) -eq 0 ]; then
+	find posts pages -name "main.md" -printf "%TY-%Tm-%Td %p\n" |
+	sort -k1,1r |
+	head -10 |
+	cut -f2 -d" " |
+	sed "s;/main.md;;g" > $tmp-git-change
+fi
 
 ### CREATE/DELETE ARTICLE DIRECTORY ###
 cat $tmp-git-change |
@@ -37,7 +45,7 @@ while read d ; do
         -v mf="$datadir/$d/modified_time" \
         'NR==1{print > mf}END{print > cf}'
 
-    ### MAKE SOME SNIPS ###
+    ### MAKE SOME SNIPS ### SNIPS = link, link_date
     grep -m 1 '^articleTitle: ' "$contentsdir/$d/main.md"           |
     sed "s;^articleTitle: ;;g" |
     awk '{if(/^$/){print "NO TITLE"}else{print}}
@@ -56,35 +64,43 @@ done
 touch "$datadir/post_list"
 cp "$datadir/post_list" $tmp-old-post-list
 
-# LIST POSTS DATA
+# LIST POSTS PRE-DATA : postlist should be ordered in time order. use $datadir/$d/created_time
 cd "$datadir"
 find posts pages -type f     |
 grep created_time            |
-xargs grep -H .              |
+xargs grep -H .              | # with -H, shows filename / grep . shows created_time itself
 sed 's;/created_time:; ;'    |
 awk '{print $2,$3,$1}'       |
 sort -k1,2                   |
 tee $tmp-list                |
-awk '$3~/^posts/'            > $tmp-post_list
-mv $tmp-post_list "$datadir/post_list"
+grep " posts/"          > $tmp-pre-post_list
+
 
 # LIST PAGES DATA
-awk '$3~/^pages/' $tmp-list  > $tmp-page_list
+grep " pages/" $tmp-list  > $tmp-page_list
 mv $tmp-page_list "$datadir/page_list"
 
-# MAKE POST LIST WITH DELETED POSTS
-sort -m $tmp-old-post-list "$datadir/post_list" |
-uniq > $tmp-new-old-list
+# MAKE POST LIST WITH SET DIFFERENCE BETWEEN PRE-DATA AND IGNOREDIRLIST
+awk '$0=$3' $tmp-pre-post_list | # post list is set difference between pre-post($3,only dirname) and ignoredir-list.
+sort -m - "$datadir/ignoredir_list" "$datadir/ignoredir_list" | # post-list:ordered ignore-post-list:not ordered
+nl          | # set order in 1st column
+sort -k2,2  | # sort by dirname
+uniq -u -f1 | # uniq list (ignore 1st column)
+sort -k1,1  | # sort again, with 1st column(post-list order)
+cut -f2- > $tmp-post_list
 
-#cat $tmp-git-change > /tmp/changed    #for debug
+# MAKE POST LIST WITH TIME STAMP
+cat $tmp-post_list |
+xargs -I@ grep @ $tmp-pre-post_list > "$datadir/post_list"
+
 
 # MAKE LIST OF POSTS WHOSE NAV MUST BE CHANGED
 cat $tmp-git-change                             |
-xargs -I@ -n 1 grep -C1 "@$" $tmp-new-old-list  |
+xargs -I@ -n 1 grep -C1 "@$" $tmp-post_list     | # 変更対象と、前後のディレクトリがそれぞれ対象（最大：変更対象*3）
 sort -u                                         |
-while read ymd hms d ; do
-        [ -f "$contentsdir/$d/main.md" ] || continue
-        grep -C1 "$d$" "$datadir/post_list"                             |
+while read d; do
+        [ -f "$contentsdir/$d/main.md" ] || continue # main.mdが無いならスルー、ある場合は$dのnavを再生成
+        grep -C1 "$d" "$datadir/post_list"                             | #正しいpost一覧から、前後のディレクトリ名を取得
         awk '{print $3}'                                                |
         sed -n -e '1p' -e '$p'                                          |
         xargs -I@ cat "$datadir/@/link"                                 |
@@ -95,7 +111,7 @@ done
 
 ### MAKE KEYWORD LIST ###
 cd "$contentsdir"
-cat $tmp-list                    |
+cat $datadir/post_list           |
 awk '{print $3 "/main.md"}'      |
 xargs grep -H -m 1 '^Keywords:'  |
 sed 's;/main.md:Keywords:; ;'    |
@@ -107,7 +123,7 @@ mv $tmp-keyword_list "$datadir/keyword_list"
 
 ### MAKE SEARCH FILE ###
 cd "$contentsdir"
-cat $tmp-list                    |
+cat $datadir/post_list           |
 awk '{print $3 "/main.md"}'      |
 xargs grep -H ^                  |
 sed 's;/main.md:; ;'             |
@@ -115,5 +131,14 @@ awk 'a!=$1{c=0;a=$1}c>=2{print}$2~/^---$/{c++}' |
 awk '$2~/^\*$|^#*$/{$2=""}{print}'              |
 awk 'NF>1'                      > $tmp-all
 mv $tmp-all "$datadir/all_markdown"
+
+
+#[ ! -d /var/tmp/fetch$(date +%Y%m%d_%H) ] && mkdir /var/tmp/fetch$(date +%Y%m%d_%H)
+#[ -f $tmp-git-change ] && mv $tmp-* /var/tmp/fetch$(date +%Y%m%d_%H)
+
+echo changed line:$(cat $tmp-git-change | grep -c . )
+echo ""
+echo updated dir:
+cat $tmp-git-change
 
 rm -f $tmp-*
