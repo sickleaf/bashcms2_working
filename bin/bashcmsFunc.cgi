@@ -83,4 +83,24 @@ function pageAnchorHTML() {
 
 }
 
-export -f pageAnchorHTML
+
+#from pages/posts list and anchorHTML, generate HTML
+function viewlistHTML() {
+	viewlistPath="$1"
+	HTMLanchor="$2"
+
+	cat "${viewlistPath}" |
+	xargs -I@ cat "$datadir/@/link_date" "$contentsdir/@/main.md" <(echo "") |
+	sed "/---/,/---/d" |
+	sed "/\`\`\`/,/\`\`\`/d" |
+	grep -A20 '^<a href="/?post' |
+	grep -E ^[ぁ-んァ-ン亜-熙　-】a-zA-Z0-9\<]  |
+	grep -Ev "^(<blo|<hr)" |
+	uniq |
+	awk ' /<a href/{print "\n---\n###### "$0} !/<a href/{print}' |
+	pandoc --template="$viewdir/template.html" -f markdown_github |
+	sed "s;<\!--PAGER-->;<center>${HTMLanchor}</br>;g"
+
+}
+
+export -f pageAnchorHTML  viewlistHTML

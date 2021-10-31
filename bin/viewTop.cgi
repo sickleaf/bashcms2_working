@@ -33,15 +33,6 @@ else
 
 fi
 
-cat $tmp-viewlist |
-xargs -I@ cat "$datadir/@/link_date" "$contentsdir/@/main.md" <(echo "") |
-sed "/\`\`\`/,/\`\`\`/d" |
-grep -A20 '^<a href="/?post' |
-grep -E ^[ぁ-んァ-ン亜-熙　-】a-zA-Z0-9\<]  | 
-grep -Ev "^(Keywords: |articleTitle: |Copyright:|<blo)" |
-sed -e "/\<a href/a \  " -e "/\<a href/i  \ \n---\n" -e "/\<a href/s/^/###### /g" |
-pandoc --template="$viewdir/template.html" -f markdown_github |
-sed "s;<br />$;;g" |
-sed "s;<\!--PAGER-->;<center>${HTMLanchor}</br>;g"
+viewlistHTML "$tmp-viewlist" "$HTMLanchor"
 
 rm $tmp-viewlist

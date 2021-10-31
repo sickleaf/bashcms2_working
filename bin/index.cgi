@@ -44,16 +44,9 @@ if [ "${dir}" = "pages/top" ]; then
 
 	tac "$datadir/post_list"	|
 	sed -n "${start},${end}p"	|
-	awk '{print $3}'		|
-	xargs -I@ cat "$datadir/@/link_date" "$contentsdir/@/main.md" <(echo "") |
-	sed "/\`\`\`/,/\`\`\`/d" |
-	grep -A20 '^<a href="/?post' |
-	grep -E ^[ぁ-んァ-ン亜-熙　-】a-zA-Z0-9\<]  |
-	grep -Ev "^(Keywords: |articleTitle:|Copyright:|<blo|<hr)" |
-	uniq |
-	sed  -e "/^<a href/i  \ \n---\n" -e "/\<a href/s/^/###### /g" -e "s;;;g" |
-	pandoc --toc --toc-depth=3 --template="$viewdir/template.html" -f markdown_github |
-	sed "s;<\!--PAGER-->;<center>${HTMLanchor}</br>;g"
+	awk '{print $3}'		> $tmp-viewlist
+
+	viewlistHTML "$tmp-viewlist" "$HTMLanchor"
 
 else
 
@@ -62,7 +55,6 @@ else
 	    -f markdown_github+yaml_metadata_block "$md" "$tmp-meta.yaml"  |
 	sed -r "/:\/\/|=\"\//!s;<(img src|a href)=\";&/$dir/;" |
 	sed "s;/$dir/#;#;g" |
-#	sed "s;<br />$;;g" |
 	sed 's;href="<a href="\(.*\)"[^>]*>.*</a>";href="\1";'
 
 fi
