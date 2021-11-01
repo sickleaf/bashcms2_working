@@ -89,8 +89,6 @@ function viewlistHTML() {
 	viewlistPath="$1"
 	HTMLanchor="$2"
 
-	cp $viewlistPath /var/tmp
-
 	cat "${viewlistPath}" |
 	xargs -I@ cat "$datadir/@/link_date" "$contentsdir/@/main.md" <(echo "") |
 	sed "/^---$/,/^---$/d" |
