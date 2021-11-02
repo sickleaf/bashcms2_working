@@ -146,3 +146,28 @@ border-bottom-color: #ffd9d9;
   padding-inline-start: 20px;
   color: gray; /*アイコン色*/
 }
+
+
+div.navItem {
+	position: relative;
+	display: block;
+	padding: 1rem;
+	border: 2px ridge #eeeeee;
+	float: left;
+	width: 50%;
+	pointer-events: none;
+}
+
+div.navItem:hover {
+	background-color: #94c8ff;
+}
+
+.navItem > a{
+	pointer-events: auto;
+}
+
+.navItem > a:hover{
+	text-decoration: none;
+	border-color: #007bff;
+	background-color: #94c8ff;
+}

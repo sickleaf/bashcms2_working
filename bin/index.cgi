@@ -25,7 +25,8 @@ cat << FIN > $tmp-meta.yaml
 created_time: '$(cat "$datadir/$dir/created_time")'
 modified_time: '$(cat "$datadir/$dir/modified_time")'
 title: '$(cat "$datadir/$dir/title")'
-nav: '$(cat "$datadir/$dir/nav")'
+navPrev: '$(cat "$datadir/$dir/nav" | sed "s;</a> 次の記事:.*;</a>;g" )'
+navNext: '$(cat "$datadir/$dir/nav" | grep -o "次の記事.*</a>" )'
 views: '$(ls -l "$counter" | cut -d' ' -f 5)'
 ogpmd: '$(cat "$md" | grep -vE "[!$&'()*+,-./:;<=>?@\`\[\\^_{|}~]"  | sed "s;#* ;;g" | tr "\n" " " | iconv -f utf8 -t sjis | cut -c 1-160 | iconv -c -f sjis -t utf8)'
 $(cat "$contentsdir/config.yaml" )
