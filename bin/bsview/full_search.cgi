@@ -9,8 +9,6 @@ source "$appdir/bashcmsFunc.cgi"
 
 word=$(nkf --url-input <<< ${QUERY_STRING} | sed 's/^word=//' )
 
-[ "$(echo $word | tr -d "\n" | wc -c)" -gt 1 ]  || exit
-
 numchar=$(nkf -w16B0 <<< "$word" | xxd -plain | tr -d '\n' | sed 's/..../\&#x&;/g')
 
 cat << FIN
