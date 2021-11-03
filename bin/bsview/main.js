@@ -1,14 +1,27 @@
 document.addEventListener("DOMContentLoaded", function(){
     invisibleCard();
-});
-
-window.onload = function () {
     lastArticles(5);
     rankArticles();
     tagcloud();
     monthlyArchive();
+
+});
+
+const sbar = document.getElementById('searchBar');
+
+sbar.addEventListener('focusout', function(){
+	var word = document.getElementById("full-search-box").value;
+	if(byteLengthOf(word) == 0){
+		location.reload();
+	}
+});
+
+window.onload = function () {
     linkKeywords();
-    //fullSearch("");
+}
+
+function byteLengthOf(str) {
+	return (new Blob([str])).size;
 }
 
 function lastArticles(num){
@@ -32,6 +45,9 @@ function linkKeywords(){
 
         document.getElementById("keywords").innerHTML = httpReq.responseText;
     }
+    if(document.getElementById("keywords") == null)
+	return;
+
     var word = document.getElementById("keywords").innerHTML;
     var url = "/link_keywords.cgi?keywords=" + encodeURIComponent(word);
     httpReq.open("GET",url,true);
@@ -40,21 +56,24 @@ function linkKeywords(){
 
 function fullSearch(){
     var word = document.getElementById("full-search-box").value; 
-    if(word == "")
-        return;
 
     var httpReq = new XMLHttpRequest();
-    httpReq.onreadystatechange = function(){
-        if(httpReq.readyState != 4 || httpReq.status != 200)
-            return;
 
-        document.getElementById("article-body").innerHTML = httpReq.responseText;
-        document.body.style.cursor = "default";
-    }
-    var url = "/bsview/full_search.cgi?word=" + encodeURIComponent(word);
-    httpReq.open("GET",url,true);
-    httpReq.send(null);
-    document.body.style.cursor = "wait";
+	if(byteLengthOf(word) >= 2){
+
+		httpReq.onreadystatechange = function(){
+		if(httpReq.readyState != 4 || httpReq.status != 200)
+		return;
+
+		document.getElementById("article-body").innerHTML = httpReq.responseText;
+		document.body.style.cursor = "default";
+		}
+
+		var url = "/bsview/full_search.cgi?word=" + encodeURIComponent(word);
+		httpReq.open("GET",url,true);
+		httpReq.send(null);
+		document.body.style.cursor = "wait";
+	}
 }
 
 function rankArticles(){
