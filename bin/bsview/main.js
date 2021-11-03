@@ -45,6 +45,9 @@ function linkKeywords(){
 
         document.getElementById("keywords").innerHTML = httpReq.responseText;
     }
+    if(document.getElementById("keywords") == null)
+	return;
+
     var word = document.getElementById("keywords").innerHTML;
     var url = "/link_keywords.cgi?keywords=" + encodeURIComponent(word);
     httpReq.open("GET",url,true);
