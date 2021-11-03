@@ -152,7 +152,7 @@ div.navItem {
 	position: relative;
 	display: block;
 	padding: 1rem;
-	border: 2px ridge #eeeeee;
+	border: 0px ridge #eeeeee;
 	float: left;
 	width: 50%;
 	pointer-events: none;
