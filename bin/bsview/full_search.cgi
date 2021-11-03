@@ -8,7 +8,6 @@ trap 'rm -f $tmp-*' EXIT
 source "$appdir/bashcmsFunc.cgi"
 
 word=$(nkf --url-input <<< ${QUERY_STRING} | sed 's/^word=//' )
-
 numchar=$(nkf -w16B0 <<< "$word" | xxd -plain | tr -d '\n' | sed 's/..../\&#x&;/g')
 
 cat << FIN
