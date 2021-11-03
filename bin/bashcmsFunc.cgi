@@ -91,7 +91,7 @@ function viewlistHTML() {
 
 	cat "${viewlistPath}" |
 	xargs -I@ cat "$datadir/@/link_date" "$contentsdir/@/main.md" <(echo "") |
-	sed "/^---$/,/^---$/d" |
+	sed -E "/^---[ ]*$/,/^---[ ]*$/d" |
 	sed "/\`\`\`/,/\`\`\`/d" |
 	grep -A20 '^<a href="/?post' |
 	grep -E ^[ぁ-んァ-ン亜-熙　-】a-zA-Z0-9#\<]  |
