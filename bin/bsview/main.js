@@ -1,14 +1,27 @@
 document.addEventListener("DOMContentLoaded", function(){
     invisibleCard();
-});
-
-window.onload = function () {
     lastArticles(5);
     rankArticles();
     tagcloud();
     monthlyArchive();
+
+});
+
+const sbar = document.getElementById('searchBar');
+
+sbar.addEventListener('focusout', function(){
+	var word = document.getElementById("full-search-box").value;
+	if(byteLengthOf(word) == 0){
+		location.reload();
+	}
+});
+
+window.onload = function () {
     linkKeywords();
-    //fullSearch("");
+}
+
+function byteLengthOf(str) {
+	return (new Blob([str])).size;
 }
 
 function lastArticles(num){
