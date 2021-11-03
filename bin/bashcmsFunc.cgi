@@ -113,7 +113,8 @@ function viewlistFullSearch() {
 	sed -E "/^---[ ]*$/,/^---[ ]*$/d" |
 	awk -v word=$word \
 	' !(/^<a href/) && /'"$word"'/ {print "<blockquote style=\"border-left: 0.5rem solid #9ba5b9\">"$0"</blockquote>\n"} \
-	  /^<a href/ {print "<hr>\n"$0"<br>\n"}'
+	  /^<a href/ {print "<hr>\n"$0"<br>\n"}' |
+	sed "/^<a href/! s/$word/<strong>$word<\/strong>/g"
 
 }
 
