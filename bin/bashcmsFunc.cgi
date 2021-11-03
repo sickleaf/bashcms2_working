@@ -86,21 +86,35 @@ function pageAnchorHTML() {
 
 #from pages/posts list and anchorHTML, generate HTML
 function viewlistHTML() {
-	viewlistPath="$1"
-	HTMLanchor="$2"
+        viewlistPath="$1"
+        HTMLanchor="$2"
 
-	cat "${viewlistPath}" |
-	xargs -I@ cat "$datadir/@/link_date" "$contentsdir/@/main.md" <(echo "") |
-	sed -E "/^---[ ]*$/,/^---[ ]*$/d" |
-	sed "/^\`\`\`/,/^\`\`\`/d" |
-	grep -A20 '^<a href="/?post' |
-	grep -E ^[ぁ-んァ-ン亜-熙　-】a-zA-Z0-9#\<]  |
-	grep -Ev "^(<blo|<hr|#{3,6})" |
-	uniq |
-	awk ' /<a href/{print "\n---\n###### "$0} !/<a href/{print}' |
-	pandoc --template="$viewdir/template.html" -f markdown_github |
-	sed "s;<\!--PAGER-->;<center>${HTMLanchor}</br>;g"
+        cat "${viewlistPath}" |
+        xargs -I@ cat "$datadir/@/link_date" "$contentsdir/@/main.md" <(echo "") |
+        sed -E "/^---[ ]*$/,/^---[ ]*$/d" |
+        sed "/^\`\`\`/,/^\`\`\`/d" |
+        grep -A20 '^<a href="/?post' |
+        grep -E ^[ぁ-んァ-ン亜-熙　-】a-zA-Z0-9#\<]  |
+        grep -Ev "^(<blo|<hr|#{3,6})" |
+        uniq |
+        awk ' /<a href/{print "\n---\n###### "$0} !/<a href/{print}' |
+        pandoc --template="$viewdir/template.html" -f markdown_github |
+        sed "s;<\!--PAGER-->;<center>${HTMLanchor}</br>;g"
 
 }
 
-export -f pageAnchorHTML  viewlistHTML
+#from pages/posts list and word, generate HTML for search result
+function viewlistFullSearch() {
+	viewlistPath="$1"
+	word="$2"
+
+	cat "${viewlistPath}" |
+	xargs -I@ cat "$datadir/@/link_date" "$contentsdir/@/main.md" |
+	sed -E "/^---[ ]*$/,/^---[ ]*$/d" |
+	awk -v word=$word \
+	' !(/^<a href/) && /'"$word"'/ {print "<blockquote style=\"border-left: 0.5rem solid #9ba5b9\">"$0"</blockquote>\n"} \
+	  /^<a href/ {print "<hr>\n"$0"<br>\n"}'
+
+}
+
+export -f pageAnchorHTML viewlistHTML viewlistFullSearch
