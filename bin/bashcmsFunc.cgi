@@ -98,8 +98,7 @@ function viewlistHTML() {
         grep -Ev "^(<blo|<hr|#{3,6})" |
         uniq |
         awk ' /<a href/{print "\n<hr>\n###### "$0} !/<a href/{print}' |
-        pandoc --template="$viewdir/template.html" -f markdown_github+yaml_metadata_block - <(cat $contentsdir/config.yaml |
-	awk 'BEGIN{print "---"} {print} END{print "---"}') |
+        pandoc --template="$viewdir/template.html" -f markdown_github+yaml_metadata_block - <(cat $contentsdir/config.yaml | awk 'BEGIN{print "---"} {print} END{print "---"}') |
 	sed 's;href="<a href="\(.*\)"[^>]*>.*</a>";href="\1";' |
         sed "s;<\!--PAGER-->;<center>${HTMLanchor}</br>;g"
 
