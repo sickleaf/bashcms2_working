@@ -119,4 +119,13 @@ function viewlistFullSearch() {
 
 }
 
-export -f pageAnchorHTML viewlistHTML viewlistFullSearch
+#
+function preCheck() {
+	mdPath="$1"
+
+	m="<<<quiz";
+	cat "$mdPath" | sed -r "/$m/,/$m/ s;^;$m\t;g;  s;$m\t$;;g"  | awk -F"\t" '   NF>=4 {a[$2]++; print "<div class=question><div class=qlabel>Q."a[$2]"【"$2"_"$3"】</div>"$4"<br> <input type=checkbox id=q"a[$2]"><label class=button for=q"a[$2]">Ans</label><p class=ans>"$5"</p></div><br>"}   !/<<<quiz/{print}'
+
+}
+
+export -f pageAnchorHTML viewlistHTML viewlistFullSearch preCheck
