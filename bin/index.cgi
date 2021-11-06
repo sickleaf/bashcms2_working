@@ -52,8 +52,9 @@ if [ "${dir}" = "pages/top" ]; then
 else
 
 	### OUTPUT ###
+	preCheck "$md" |
 	pandoc --toc --toc-depth=3 --template="$viewdir/template.html"	\
-	    -f markdown_github+yaml_metadata_block "$md" "$tmp-meta.yaml"  |
+	    -f markdown_github+yaml_metadata_block - "$tmp-meta.yaml"  |
 	sed -r "/:\/\/|=\"\//!s;<(img src|a href)=\";&/$dir/;" |
 	sed "s;/$dir/#;#;g" |
 	sed 's;href="<a href="\(.*\)"[^>]*>.*</a>";href="\1";'
