@@ -96,6 +96,7 @@ function viewlistHTML() {
         grep -A20 '^<a href="/?post' |
         grep -E ^[ぁ-んァ-ン亜-熙　-】a-zA-Z0-9#\<]  |
         grep -Ev "^(<blo|<hr|#{3,6})" |
+	sed "s;^## ;#### ;g" |
         uniq |
         awk ' /<a href/{print "\n<hr>\n###### "$0} !/<a href/{print}' |
         pandoc --template="$viewdir/template.html" -f markdown_github+yaml_metadata_block - <(cat $contentsdir/config.yaml | awk 'BEGIN{print "---"} {print} END{print "---"}') |
