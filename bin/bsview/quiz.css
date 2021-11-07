@@ -1,0 +1,40 @@
+.question  {
+  background-color: #ffeccf;
+  -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+     -khtml-user-select: none; /* Konqueror HTML */
+       -moz-user-select: none; /* Old versions of Firefox */
+        -ms-user-select: none; /* Internet Explorer/Edge */
+            user-select: none; /* Non-prefixed version, currently
+                                  supported by Chrome, Edge, Opera and Firefox */
+}
+
+.question .button {
+  display: flexbox;
+  flex-wrap: nowrap;
+  cursor: pointer;
+  padding: 3px 10px;
+  background-color: #fff;
+  border: 1px solid #ffeccf;
+  text-align: center;
+  border-radius: 3px;
+  margin: 0 0 0.6em 0;
+}
+
+.question .button:hover {
+  border-color: red;
+}
+
+
+.qlabel  {
+  color: #c52830;
+  line-height: 1em;
+}
+
+.question .ans, .question > input[type="checkbox"] {
+  display: none;
+}
+
+.question > input[type="checkbox"]:checked ~ .ans {
+  display: inline-block;
+}
