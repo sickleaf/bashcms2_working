@@ -7,7 +7,7 @@ body {
 #widgets h1{font-size:160%}
 #widgets a{font-size:80%}
 
-table,th,tr,td {border-style:solid;}
+table,th,tr,td {border-style:ridge;}
 
 /* set responsive for video,image */
 .col-md-9 {
