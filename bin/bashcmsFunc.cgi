@@ -95,7 +95,7 @@ function viewlistHTML() {
         sed "/^\`\`\`/,/^\`\`\`/d" |
         sed "/<<<quizStart>>>/,/<<<quizEnd>>>/d" |
         grep -A20 '^<a href="/?post' |
-        grep -E ^[ぁ-んァ-ン亜-熙　-】a-zA-Z0-9#\<]  |
+        grep -E ^[ぁ-んァ-ン亜-熙　-】a-zA-Z0-9*!#\<]  |
         grep -Ev "^(<blo|<hr|#{3,6})" |
 	sed "s;^## ;#### ;g" |
         uniq |
