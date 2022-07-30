@@ -1,0 +1,170 @@
+Content-type: text/html
+
+<!doctype html>
+<html lang="ja" prefix="og: http://ogp.me/ns#" >
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!--
+    <meta name="description" content="$ogpmd$">
+    <meta name="twitter:description" content="$ogpmd$">
+    <meta property="og:title" content="$title$" />
+    <meta property="og:type" content="article" />
+    <meta property="og:url" content="https://sickleaf.work/" />
+    <meta property="og:image" content="https://sickleaf.work/pages/top/ogp_book.jpg" />
+    -->
+    <!--    <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors"> -->
+    <!--    <meta name="generator" content="Jekyll v3.8.5">rs"> -->
+    <title>$title$</title>
+
+     <!--    <link rel="canonical" href="https://getbootstrap.com/docs/4.3/examples/jumbotron/"> -->
+
+    <!-- Bootstrap core CSS -->
+    <!-- <link href="/docs/4.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous"> -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous"> 
+    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+
+
+
+    <style>
+      .bd-placeholder-img {
+        font-size: 1.125rem;
+        text-anchor: middle;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+      }
+
+      @media (min-width: 768px) {
+        .bd-placeholder-img-lg {
+          font-size: 3.5rem;
+        }
+      }
+    </style>
+    <!-- Custom styles for this template -->
+    <!-- <link href="jumbotron.css" rel="stylesheet"> -->
+    <link href="/bsview/jumbotron.css" rel="stylesheet">
+    <link href="/bsview/quiz.css" rel="stylesheet">
+    <link rel="stylesheet"
+          href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.8/styles/default.min.css">
+  </head>
+  <body>
+    <!--
+    <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+  <a class="navbar-brand" href="/">leaflog</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+
+    <ul class="navbar-nav mr-auto">
+	$for(links)$
+	$if(links.sublinks)$
+	<li class="nav-item dropdown active">
+		<a class="nav-link dropdown-toggle" href="$links.href$" id="dropdown01"
+			data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">$links.text$</a>
+		<div class="dropdown-menu" aria-labelledby="dropdown01">
+			$for(links.sublinks)$
+			<a class="dropdown-item" href="$links.sublinks.href$">$links.sublinks.text$</a>
+			$endfor$
+		</div>
+		$else$
+		<li class="nav-item active">
+			<a class="nav-link" href="$links.href$">$links.text$</a>
+		</li>
+		$endif$
+	$endfor$
+    </ul>
+    <form class="form-inline my-2 my-lg-0" id="searchBar" >
+      <input class="form-control mr-sm-2" type="text" placeholder="検索ワード" aria-label="Search" id="full-search-box" onkeyup=fullSearch()>
+      <button class="btn btn-outline-success my-2 my-sm-0" type="button" onclick="fullSearch()">Search</button>
+    </form>
+  </div>
+</nav>
+    -->
+
+<main role="main">
+
+  <!-- Main jumbotron for a primary marketing message or call to action -->
+
+    <!--
+  <div class="jumbotron">
+    <div class="container">
+      <h1 class="display-5">leaflog</h1>
+    </div>
+  </div>
+    -->
+
+  <div class="container">
+    <!-- Example row of columns -->
+
+    <div class="row">
+	    <div class="col-md-full" id="article-body">
+		    $if(articleTitle)$
+		    <h1>$articleTitle$</h1>
+		    $endif$
+		    <div class="card" id="article-info">
+			    $if(Keywords)$
+			    <p style="padding:5px"><strong>$created_time$</strong> (mod: $modified_time$)   [count：$views$] <br />
+			    tag: <span id="keywords">$Keywords$</span>
+			    </p>
+			    $endif$
+		    </div>
+		    <div class="" id="article-toc">
+			    $toc$
+		    </div>
+		    $body$
+
+		    <div class="navItem" id="article-info">
+			    $navPrev$
+		    </div>
+		    <div class="navItem" id="article-info">
+			    $navNext$
+		    </div>
+
+	<!--
+	    </div>
+    -->
+	<!--
+	    <div class="col-md-3" id="widgets">
+		    $if(sociallinks)$
+		    <h2>Links</h2>
+		    $endif$
+		    $for(sociallinks)$
+		    <a href="$sociallinks.href$"><i class="fa $sociallinks.icon$ fa-3x"></i></a>
+		    $endfor$
+		    <aside id="tag-cloud"></aside>
+		    <br />
+		    <aside id="rank-articles"></aside>
+		    <br />
+		    <aside id="last-articles"></aside>
+		    <br />
+		    <aside id="monthly-archive"></aside>
+	    </div>
+    </div>
+
+    <hr>
+
+    -->
+    <footer>
+	    <p>$Copyright$</p>
+	    <!--PAGER-->
+    </footer>
+
+
+  </div> <!-- /container -->
+
+</main>
+
+<footer class="container">
+</footer>
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js" integrity="sha384-xrRywqdh3PHs8keKZN+8zzc5TX0GRTLCcmivcbNJWm2rs5C8PRhcEn3czEjhAO9o" crossorigin="anonymous"></script>
+<script src="/bsview/main.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.8/highlight.min.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+<!-- <script>window.jQuery || document.write('<script src="/docs/4.3/assets/js/vendor/jquery-slim.min.js"><\/script>')</script><script src="/docs/4.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-xrRywqdh3PHs8keKZN+8zzc5TX0GRTLCcmivcbNJWm2rs5C8PRhcEn3czEjhAO9o" crossorigin="anonymous"></script> -->
+  </body>
+</html>
