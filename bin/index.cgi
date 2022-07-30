@@ -12,8 +12,24 @@ tmp=/tmp/$$
 dir="$(tr -dc 'a-zA-Z0-9_=' <<< ${QUERY_STRING} | sed 's;=;s/;')"
 [ -z "$dir" ] && dir="pages/top"
 [ "$dir" = "post" ] && dir="$(tail -n 1 "$datadir/post_list" | cut -d' ' -f 3)"
-md="$contentsdir/$dir/main.md"
-[ -f "$md" ]
+
+## get articleList. filter .md OR .txt, sorted in latest order, $1=timestamp,$2=fullpath
+find "${contentsdir}/${dir}" -type f -printf "%A+ %p\n" | grep -E "\.(txt|md)$" | sort -k1,1r  > $tmp-articleList
+
+# if $tmp-articleList contains no line,QUIT with 503.
+[ -s "$tmp-articleList" ] || { echo "${contentsdir}/${dir} contains no textfile. check directory or querystring."; exit 503; }
+
+# check main.md exists
+if [ ! "$(grep "main.md$" $tmp-articleList)" = "" ]; then
+	# if exists, make page with pandoc
+	md="$contentsdir/$dir/main.md"
+else
+	# if doesn't exist, show plain text(.txt/.md). then,quit.
+	md=$(head -1 $tmp-articleList | cut -d" " -f2)
+
+        pandoc --template="$viewdir/plainTemplate.html" $md
+	return
+fi
 
 ### MAKE MATADATA ###
 counter="$datadir/counters/$(tr '/' '_' <<< $dir)"
