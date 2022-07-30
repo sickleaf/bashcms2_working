@@ -1,6 +1,6 @@
 #!/bin/bash -xv
 source "$(dirname $0)/conf"
-exec 2> "$logdir/$(basename $0).$(date +%Y%m%d_%H%M%S).$$"
+exec 2>> "$logdir/$(date +%Y%m%d).$(basename $0)"
 
 word=$(nkf --url-input <<< ${QUERY_STRING} | sed 's/^word=//' )
 numchar=$(nkf -w16B0 <<< "$word" | xxd -plain | tr -d '\n' | sed 's/..../\&#x&;/g')

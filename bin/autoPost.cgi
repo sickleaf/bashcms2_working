@@ -1,7 +1,7 @@
 #!/bin/bash -euvx
 source "$(dirname $0)/conf"
 source "$(dirname $0)/local/localconf"
-exec 2> "$logdir/$(basename $0).$(date +%Y%m%d_%H%M%S).$$"
+exec 2>> "$logdir/$(date +%Y%m%d).$(basename $0)"
  
 echo -e 'Content-type: text/html\n'
 

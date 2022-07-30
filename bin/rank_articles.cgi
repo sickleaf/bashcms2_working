@@ -1,6 +1,6 @@
 #!/bin/bash
 source "$(dirname $0)/conf"
-exec 2> "$logdir/$(basename $0).$(date +%Y%m%d_%H%M%S).$$"
+exec 2>> "$logdir/$(date +%Y%m%d).$(basename $0)"
 
 [ ! -v articleNum ] && articleNum=10
 

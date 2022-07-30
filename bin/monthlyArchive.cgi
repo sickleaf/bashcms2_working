@@ -1,6 +1,6 @@
 #!/bin/bash -euxv
 source "$(dirname $0)/conf"
-#exec 2> "$logdir/$(basename $0).$(date +%Y%m%d_%H%M%S).$$"
+exec 2>> "$logdir/$(date +%Y%m%d).$(basename $0)"
 
 cat "$datadir/post_list"  |
 cut -c 1-7 		|
