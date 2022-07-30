@@ -1,10 +1,20 @@
-contents="bashcms2_sample"
 contents_owner="wklov"
-wwwdir="/var/www"
-contentsdir="$wwwdir/$contents"
-appdir="$wwwdir/system_bashcms2"
-viewdir="$appdir/bsview"
-logdir="/var/log/$contents"
-datadir="${contentsdir}_data"
+
+contents="pagepost"
+datadir="blogdata"
+systemdir="system_bashcms2/bin"
+logname="bashcms2"
+
+optRoot="/opt"
+wwwRoot="/var/www"
+
 articleNum=10
+
+contentsdir="$optRoot/$contents"	# /opt/pagepost
+datadir="$optRoot/$datadir"		# /opt/blogdata
+
+appdir="$wwwRoot/$systemdir"		# /var/www/system_bashcms2
+viewdir="$appdir/bsview"		# /var/www/system_bashcms2/bsview
+logdir="/var/log/$logname"		# /var/log/bashcms2
+
 export LANG=ja_JP.UTF-8
