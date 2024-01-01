@@ -24,9 +24,9 @@ mv "fetch" "fetch_$rnd.cgi"
 
 ### PULL ARTICLE REPO ###
 rm -rvf "${contentsdir:?}"
-cd "$wwwdir"
+cd "$optdir"
 
-git clone "git@github.com:$contents_owner/$contents.git"
+git clone "https://github.com/$contents_owner/$contents_repo.git" $contents
 chown www-data:www-data "$contentsdir" -R
 
 echo "call fetch_$rnd.cgi from GitHub"

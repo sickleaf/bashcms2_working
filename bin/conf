@@ -1,10 +1,22 @@
-contents="bashcms2_sample"
-contents_owner="wklov"
+contents_owner="sickleaf"
+
+contents_repo="bashcms2_contents"
+contents="pagepost"  # due to original deploy script
+
+datadir="blogdata"
+systemdir="system_bashcms2/bin"
+logname="bashcms2"
+
+optdir="/opt"
 wwwdir="/var/www"
-contentsdir="$wwwdir/$contents"
-appdir="$wwwdir/system_bashcms2"
-viewdir="$appdir/bsview"
-logdir="/var/log/$contents"
-datadir="${contentsdir}_data"
+
+contentsdir="$optdir/$contents"		# /opt/pagepost
+datadir="$optdir/$datadir"		# /opt/blogdata
+
+appdir="$wwwdir/$systemdir"		# /var/www/system_bashcms2/bin
+viewdir="$appdir/bsview"		# /var/www/system_bashcms2/bsview
+logdir="/var/log/$logname"		# /var/log/bashcms2
+
 articleNum=10
+
 export LANG=ja_JP.UTF-8
