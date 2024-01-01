@@ -86,6 +86,9 @@ grep " posts/"          > $tmp-pre-post_list
 grep " pages/" $tmp-list  > $tmp-page_list
 mv $tmp-page_list "$datadir/page_list"
 
+# CHECK IGNOREDIRLIST EXISTS
+[ -f "$datadir/ignoredir_list" ] || echo "" > "$datadir/ignoredir_list"
+
 # MAKE POST LIST WITH SET DIFFERENCE BETWEEN PRE-DATA AND IGNOREDIRLIST
 awk '$0=$3' $tmp-pre-post_list | # post list is set difference between pre-post($3,only dirname) and ignoredir-list.
 sort -m - "$datadir/ignoredir_list" "$datadir/ignoredir_list" | # post-list:ordered ignore-post-list:not ordered
