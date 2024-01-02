@@ -147,3 +147,13 @@ div.navItem:hover {
 	border-color: #007bff;
 	background-color: #94c8ff;
 }
+
+hr {
+  border: 0;
+  background-color: #fff;
+  border-top: 3px dashed #ff2400;
+}
+
+div#article-toc {
+  border: 2px dashed #d3d3d3;
+}
