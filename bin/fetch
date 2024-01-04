@@ -6,6 +6,7 @@ tmp=/tmp/$$
 
 echo -e 'Content-type: text/html\n'
 
+
 cd "$contentsdir"
 
 git fetch origin master
@@ -15,7 +16,7 @@ sort -u                                    > $tmp-git-change
 
 git pull
 
-[ -f "$datadir/INIT" ] &&
+[ -f "$datadir/INIT" -o "$1" = "INIT" ] &&
 find posts pages -type d       |
 grep -Eo '(posts|pages)/[^/]+' > $tmp-git-change
 
